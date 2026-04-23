@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react'
 import './App.css'
 
 const projects = [
-  { id: 1, title: 'Student Board', image: '/images/studentboard.png', category: 'flyers' },
-  { id: 2, title: 'Campaign Poster', image: '/images/campaign.jpg', category: 'flyers' },
-  { id: 3, title: 'Campaign Variant', image: '/images/campaign2.png', category: 'merch' },
-  { id: 4, title: 'Project Mockup', image: '/images/project.png', category: 'projects' },
-  { id: 5, title: 'Insomnia Poster', image: '/images/insomnia.png', category: 'merch' },
-  { id: 6, title: 'MHHS Design', image: '/images/mhhs.png', category: 'projects' },
-  { id: 7, title: 'Officers Shirt', image: '/images/officers.png', category: 'merch' },
-  { id: 8, title: 'Officers Tee 2', image: '/images/officers2.png', category: 'merch' },
-  { id: 9, title: 'Directors Poster', image: '/images/directors.png', category: 'projects' }
+  { id: 1, title: 'Student Board', image: '/images/graphics/studentboard.png', category: 'graphics' },
+  { id: 2, title: 'Campaign Poster', image: '/images/graphics/campaign.jpg', category: 'graphics' },
+  { id: 3, title: 'Campaign Variant', image: '/images/graphics/campaign2.png', category: 'graphics' },
+  { id: 4, title: 'Project Mockup', image: '/images/uiux/project.png', category: 'uiux' },
+  { id: 5, title: 'Insomnia Poster', image: '/images/graphics/insomnia.png', category: 'graphics' },
+  { id: 6, title: 'MHHS Design', image: '/images/graphics/mhhs.png', category: 'graphics' },
+  { id: 7, title: 'Officers Shirt', image: '/images/graphics/officers.png', category: 'graphics' },
+  { id: 8, title: 'Officers Tee 2', image: '/images/graphics/officers2.png', category: 'graphics' },
+  { id: 9, title: 'Directors Poster', image: '/images/graphics/directors.png', category: 'graphics' }
 ]
 
 function App() {
-  const [category, setCategory] = useState<'all' | 'flyers' | 'merch' | 'projects' | 'uiux'>('all')
+  const [category, setCategory] = useState<'all' | 'graphics' | 'merch' | 'newsletters' | 'uiux'>('all')
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -79,7 +79,7 @@ function App() {
           </div>
 
           <div className="filters reveal-on-scroll" role="tablist" aria-label="Work categories">
-            {['all','flyers','merch','projects','uiux'].map(cat => (
+            {['all','graphics','merch','newsletters','uiux'].map(cat => (
               <button
                 key={cat}
                 type="button"
@@ -93,14 +93,18 @@ function App() {
           <div className="gallery">
             {(() => {
               const filtered = category === 'all' ? projects : projects.filter(p => p.category === category)
-              return filtered.map(p => (
-                <div key={p.id} className="project-card reveal-on-scroll">
-                  <div className="project-image">
-                    <img className="project-photo" src={p.image} alt={p.title} />
-                  </div>
-                  <div className="project-info">
-                    <h3>{p.title}</h3>
-                    <p>{p.category === 'uiux' ? 'UI / UX' : p.category.charAt(0).toUpperCase() + p.category.slice(1)}</p>
+              return filtered.map((p, index) => (
+                <div 
+                  key={p.id} 
+                  className="project-card reveal-on-scroll"
+                  style={{ transitionDelay: `${(index % 3) * 100}ms` }}
+                >
+                  <img className="project-photo" src={p.image} alt={p.title} loading="lazy" />
+                  <div className="project-overlay">
+                    <div className="project-info">
+                      <h3>{p.title}</h3>
+                      <p>{p.category === 'uiux' ? 'UI / UX' : p.category.charAt(0).toUpperCase() + p.category.slice(1)}</p>
+                    </div>
                   </div>
                 </div>
               ))

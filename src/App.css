@@ -90,10 +90,6 @@ body {
   border: 1px solid rgba(255,255,255,0.03);
 }
 
-.project-image {
-  color: var(--soft-silver);
-  background: linear-gradient(135deg, rgba(155,108,255,0.03), rgba(0,0,0,0.12));
-}
 
 .marquee {
   background: linear-gradient(90deg, rgba(155,108,255,0.06), rgba(80,40,160,0.04));
@@ -225,10 +221,10 @@ main {
 /* Reveal on scroll */
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 640ms cubic-bezier(.2,.9,.2,1), transform 640ms cubic-bezier(.2,.9,.2,1);
+  transform: translateY(30px) scale(0.98);
+  transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.reveal-on-scroll.visible { opacity: 1; transform: none }
+.reveal-on-scroll.visible { opacity: 1; transform: translateY(0) scale(1); }
 
 /* About section */
 .about-section { padding: 4rem 0; }
@@ -320,48 +316,102 @@ nav a:focus-visible { outline: 3px solid rgba(155,108,255,0.18); outline-offset:
 }
 
 .gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.6rem;
+  column-count: 3;
+  column-gap: 2rem;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .gallery {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .gallery {
+    column-count: 1;
+  }
 }
 
 .project-card {
-  border: 1px solid rgba(255,255,255,0.06);
+  break-inside: avoid;
+  margin-bottom: 2rem;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.08);
   background: rgba(34,20,58,0.92);
-  transition: transform 0.18s, box-shadow 0.18s;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.6);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transform: translateZ(0); /* Hardware acceleration */
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease, border-color 0.5s ease;
 }
 
 .project-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 8px 8px 0px var(--accent-blue);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.8), 0 0 0 1px var(--accent-purple);
+  border-color: var(--accent-purple);
+  z-index: 10;
 }
 
-.project-image {
-  aspect-ratio: 4/3;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+.project-photo {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
+}
+
+.project-card:hover .project-photo {
+  transform: scale(1.1);
+  filter: brightness(0.5) blur(3px);
+}
+
+.project-overlay {
+  position: absolute;
+  inset: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono);
-  color: var(--soft-silver);
-  background: linear-gradient(135deg, rgba(155,108,255,0.03), rgba(0,0,0,0.12));
-  position: relative;
-  overflow: hidden;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  background: linear-gradient(to top, rgba(18,10,30,0.98) 0%, rgba(18,10,30,0.5) 40%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
 }
 
-.project-card:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(0,0,0,0.7) }
+.project-card:hover .project-overlay {
+  opacity: 1;
+}
 
 .project-info h3 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.1rem;
+  margin: 0 0 0.4rem 0;
+  font-size: 1.5rem;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.05s, opacity 0.5s ease 0.05s;
 }
 
 .project-info p {
   margin: 0;
   font-family: var(--font-mono);
   font-size: 0.95rem;
-  color: rgba(234,230,255,0.92);
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s, opacity 0.5s ease 0.1s;
+}
+
+.project-card:hover .project-info h3,
+.project-card:hover .project-info p {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 /* Slideshow styles */
@@ -392,20 +442,6 @@ nav a:focus-visible { outline: 3px solid rgba(155,108,255,0.18); outline-offset:
   transition: opacity 450ms ease;
 }
 
-/* Single project photo + purple overlay */
-.project-image .project-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.project-image::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(155,108,255,0.12), rgba(18,10,30,0.06));
-  pointer-events: none;
-}
 .slide-btn {
   position: absolute;
   top: 50%;
@@ -442,12 +478,6 @@ nav a:focus-visible { outline: 3px solid rgba(155,108,255,0.18); outline-offset:
 }
 .dot.active { background: var(--accent-purple); }
 
-.project-info p {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  color: rgba(234,230,255,0.92);
-}
 
 /* Footer */
 .y2k-footer {
