@@ -33,7 +33,7 @@ function App() {
       
       <header className="site-header">
         <div className="logo">
-          <h1>adonis.</h1>
+          <h1>adonis som.</h1>
         </div>
         <nav>
           <ul>
