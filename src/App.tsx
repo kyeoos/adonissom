@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 const projects = [
@@ -84,7 +84,7 @@ function App() {
                 key={cat}
                 type="button"
                 className={`filter-btn ${category === cat ? 'active' : ''}`}
-                onClick={() => setCategory(cat as any)}
+                onClick={() => setCategory(cat as 'all' | 'graphics' | 'merch' | 'newsletters' | 'uiux')}
                 aria-pressed={category === cat}
               >{cat === 'uiux' ? 'UI/UX' : cat.charAt(0).toUpperCase() + cat.slice(1)}</button>
             ))}
