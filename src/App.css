@@ -1,23 +1,60 @@
 .portfolio-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-header {
+.grid-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: 
+    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Header */
+.y2k-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--accent-color);
-  margin-bottom: 4rem;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(var(--bg-color), 0.8);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-header h1 {
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.logo h1 {
   margin: 0;
   font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.5px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+}
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  background: var(--accent-blue);
+  color: var(--bg-color);
+  padding: 0.1rem 0.4rem;
+  border-radius: 12px;
+  font-weight: bold;
 }
 
 nav ul {
@@ -29,40 +66,245 @@ nav ul {
 }
 
 nav a {
+  font-family: var(--font-mono);
   text-decoration: none;
   color: inherit;
-  font-weight: 500;
-  transition: opacity 0.2s;
+  font-size: 0.9rem;
+  transition: color 0.2s;
 }
 
 nav a:hover {
-  opacity: 0.6;
+  color: var(--accent-blue);
+}
+
+/* Main Content */
+main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+/* Hero Section */
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 70vh;
+  padding: 4rem 0;
+  gap: 4rem;
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 600px;
+}
+
+.glitch {
+  font-size: 4rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.subtitle {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--accent-blue);
+  margin: 0 0 1.5rem 0;
+  font-weight: bold;
+}
+
+.description {
+  font-size: 1.1rem;
+  margin-bottom: 2.5rem;
+  max-width: 480px;
+}
+
+.btn-primary {
+  display: inline-block;
+  font-family: var(--font-mono);
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+  padding: 0.8rem 1.5rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: all 0.2s;
+  box-shadow: 4px 4px 0px var(--accent-blue);
+}
+
+.btn-primary:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--accent-blue);
+  background: var(--accent-blue);
+  color: var(--bg-color);
+  border-color: var(--accent-blue);
+}
+
+.hero-visual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chrome-sphere {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, var(--frozen-lake), var(--accent-silver) 40%, var(--dark-amethyst) 90%);
+  box-shadow: 
+    0 0 40px rgba(133, 138, 227, 0.3),
+    inset -20px -20px 40px rgba(44, 7, 53, 0.7);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Work Section */
+.work-section {
+  padding: 4rem 0 8rem 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  font-family: var(--font-mono);
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.section-header .line {
+  flex: 1;
+  height: 1px;
+  background: var(--border-color);
 }
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2rem;
-  margin-top: 2rem;
 }
 
-.placeholder-item {
+.project-card {
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  transition: transform 0.2s;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 8px 8px 0px var(--accent-blue);
+}
+
+.project-image {
   aspect-ratio: 4/3;
-  background-color: var(--accent-color);
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  font-weight: bold;
-  color: var(--text-color);
-  opacity: 0.7;
+  font-family: var(--font-mono);
+  color: var(--accent-silver);
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    var(--grid-color) 10px,
+    var(--grid-color) 20px
+  );
 }
 
-footer {
-  margin-top: 6rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--accent-color);
-  text-align: center;
-  font-size: 0.875rem;
-  opacity: 0.7;
+.project-info {
+  padding: 1.5rem;
+}
+
+.project-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+.project-info p {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent-silver);
+}
+
+/* Footer */
+.y2k-footer {
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-color);
+  overflow: hidden;
+}
+
+.marquee {
+  background: var(--accent-blue);
+  color: var(--bg-color);
+  padding: 0.5rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: bold;
+  white-space: nowrap;
+  display: flex;
+}
+
+.marquee span {
+  animation: marquee 20s linear infinite;
+  padding-right: 2rem;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.status {
+  color: var(--accent-blue);
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 0;
+  }
+  
+  .glitch {
+    font-size: 2.5rem;
+  }
+  
+  .chrome-sphere {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .y2k-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
