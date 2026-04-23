@@ -39,7 +39,7 @@ function App() {
           <ul>
             <li><a href="#work">work</a></li>
             <li><a href="#about">about</a></li>
-            <li><a href="#contact">contact</a></li>
+            <li><a href="mailto:adonisnsom@berkeley.edu">contact</a></li>
           </ul>
         </nav>
       </header>
@@ -147,7 +147,7 @@ function App() {
       <footer className="site-footer">
         <div className="footer-top">
           <h2 className="footer-title">Let's <span className="italic-text">connect.</span></h2>
-          <a href="#contact" className="btn-primary">Send a message</a>
+          <a href="mailto:adonisnsom@berkeley.edu" className="btn-primary">Send a message</a>
         </div>
         <div className="footer-bottom">
           <p>&copy; {new Date().getFullYear()} Adonis Som.</p>
