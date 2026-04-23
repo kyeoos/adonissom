@@ -1,6 +1,32 @@
+import React, { useEffect, useState } from 'react'
 import './App.css'
 
+const projects = [
+  { id: 1, title: 'Student Board', image: '/images/studentboard.png', category: 'flyers' },
+  { id: 2, title: 'Campaign Poster', image: '/images/campaign.jpg', category: 'flyers' },
+  { id: 3, title: 'Campaign Variant', image: '/images/campaign2.png', category: 'merch' },
+  { id: 4, title: 'Project Mockup', image: '/images/project.png', category: 'projects' },
+  { id: 5, title: 'Insomnia Poster', image: '/images/insomnia.png', category: 'merch' },
+  { id: 6, title: 'MHHS Design', image: '/images/mhhs.png', category: 'projects' },
+  { id: 7, title: 'Officers Shirt', image: '/images/officers.png', category: 'merch' },
+  { id: 8, title: 'Officers Tee 2', image: '/images/officers2.png', category: 'merch' },
+  { id: 9, title: 'Directors Poster', image: '/images/directors.png', category: 'projects' }
+]
+
 function App() {
+  const [category, setCategory] = useState<'all' | 'flyers' | 'merch' | 'projects' | 'uiux'>('all')
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible')
+        else entry.target.classList.remove('visible')
+      })
+    }, { threshold: 0.12 })
+
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el))
+    return () => observer.disconnect()
+  }, [category])
   return (
     <div className="portfolio-container">
       <div className="grid-overlay"></div>
@@ -11,9 +37,9 @@ function App() {
         </div>
         <nav>
           <ul>
-            <li><a href="#work">[ WORK ]</a></li>
-            <li><a href="#about">[ ABOUT ]</a></li>
-            <li><a href="#contact">[ CONTACT ]</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
       </header>
@@ -21,16 +47,15 @@ function App() {
       <main>
         <section id="hero" className="hero-section">
           <div className="hero-content">
-            <h2 className="glitch" data-text="Graphic Design & UX">Graphic Design & UX</h2>
+            <h2 className="hero-title">Graphic Design & UX</h2>
             <p className="subtitle">
-              Intended Cognitive Science @ UC Berkeley
+              Cognitive Science student at UC Berkeley
             </p>
             <p className="description">
-              Bridging the gap between human cognition and digital interfaces. 
-              Specializing in Y2K-inspired aesthetics, user-centric design, and functional visual systems.
+              Hello! My name is Adonis Som, a second year at UC Berkeley. I am currently majoring in Cognitive Science and pursuing a career in UI/UX. I have always had a passion for design and showcasing my creativity.
             </p>
             <div className="action-buttons">
-              <a href="#work" className="btn-primary">VIEW_ARCHIVE.exe</a>
+              <a href="#work" className="btn-primary">View Portfolio</a>
             </div>
           </div>
           <div className="hero-visual">
@@ -38,33 +63,48 @@ function App() {
           </div>
         </section>
 
+        <section id="about" className="about-section reveal-on-scroll">
+          <div className="about-inner">
+            <h2>About Me</h2>
+            <p>
+              I'm Adonis Som — a graphic designer and UX enthusiast studying Cognitive Science at UC Berkeley. I craft visual systems, branding, and user interfaces that balance aesthetics and clarity.
+            </p>
+          </div>
+        </section>
+
         <section id="work" className="work-section">
-          <div className="section-header">
-            <h2>// SELECTED_WORKS</h2>
+          <div className="section-header reveal-on-scroll">
+            <h2>Selected Work</h2>
             <div className="line"></div>
           </div>
+
+          <div className="filters reveal-on-scroll" role="tablist" aria-label="Work categories">
+            {['all','flyers','merch','projects','uiux'].map(cat => (
+              <button
+                key={cat}
+                type="button"
+                className={`filter-btn ${category === cat ? 'active' : ''}`}
+                onClick={() => setCategory(cat as any)}
+                aria-pressed={category === cat}
+              >{cat === 'uiux' ? 'UI/UX' : cat.charAt(0).toUpperCase() + cat.slice(1)}</button>
+            ))}
+          </div>
+
           <div className="gallery">
-            <div className="project-card">
-              <div className="project-image placeholder">IMG_01</div>
-              <div className="project-info">
-                <h3>UX Research</h3>
-                <p>Cognitive load analysis</p>
-              </div>
-            </div>
-            <div className="project-card">
-              <div className="project-image placeholder">IMG_02</div>
-              <div className="project-info">
-                <h3>Brand Identity</h3>
-                <p>Y2K Revival</p>
-              </div>
-            </div>
-            <div className="project-card">
-              <div className="project-image placeholder">IMG_03</div>
-              <div className="project-info">
-                <h3>Interface Design</h3>
-                <p>Web Application</p>
-              </div>
-            </div>
+            {(() => {
+              const filtered = category === 'all' ? projects : projects.filter(p => p.category === category)
+              return filtered.map(p => (
+                <div key={p.id} className="project-card reveal-on-scroll">
+                  <div className="project-image">
+                    <img className="project-photo" src={p.image} alt={p.title} />
+                  </div>
+                  <div className="project-info">
+                    <h3>{p.title}</h3>
+                    <p>{p.category === 'uiux' ? 'UI / UX' : p.category.charAt(0).toUpperCase() + p.category.slice(1)}</p>
+                  </div>
+                </div>
+              ))
+            })()}
           </div>
         </section>
       </main>
