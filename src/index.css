@@ -1,42 +1,42 @@
 :root {
-  /* Core Theme Palette */
-  --frozen-lake: #97dffcff;
-  --soft-periwinkle: #858ae3ff;
-  --violet-twilight: #613dc1ff;
-  --indigo: #4e148cff;
-  --dark-amethyst: #2c0735ff;
-
-  /* Light Theme Mapping */
-  --bg-color: #f4f7fa;
-  --text-color: var(--dark-amethyst);
-  --accent-blue: var(--violet-twilight);
-  --accent-silver: var(--soft-periwinkle);
-  --grid-color: rgba(97, 61, 193, 0.15); /* violet-twilight with opacity */
-  --border-color: var(--indigo);
+  /* Core Theme Palette - Refined Purple Mode */
+  --bg-color: #0f0817;
+  --bg-secondary: #160c22;
+  --bg-tertiary: #1e1130;
   
-  --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-mono: 'Courier New', Courier, monospace;
+  --text-primary: #eae6ff;
+  --text-secondary: #b3a6d4;
+  --text-tertiary: #8a7ba8;
+  
+  --accent-primary: #9b6cff;
+  --accent-subtle: rgba(155, 108, 255, 0.15);
+  --accent-glow: rgba(155, 108, 255, 0.2);
+  
+  --border-color: rgba(155, 108, 255, 0.15);
+  --grid-color: rgba(155, 108, 255, 0.05);
+  
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Instrument Serif', serif;
+  --font-mono: 'Plus Jakarta Sans', ui-monospace, SFMono-Regular, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Dark Theme Mapping */
-    --bg-color: var(--dark-amethyst);
-    --text-color: var(--frozen-lake);
-    --accent-blue: var(--soft-periwinkle);
-    --accent-silver: var(--indigo);
-    --grid-color: rgba(151, 223, 252, 0.15); /* frozen-lake with opacity */
-    --border-color: var(--violet-twilight);
-  }
+html, body, #root {
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   font-family: var(--font-sans);
   background-color: var(--bg-color);
-  color: var(--text-color);
+  color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -44,6 +44,6 @@ body {
 }
 
 ::selection {
-  background-color: var(--accent-blue);
+  background-color: var(--text-primary);
   color: var(--bg-color);
 }
